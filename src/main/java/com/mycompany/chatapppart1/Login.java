@@ -20,11 +20,13 @@ public class Login {
         this.password = password;
         this.cellPhoneNumber = cellPhoneNumber;
     }
-
+// Checks whether the username contains an underscore
+// and is no more than five characters long.
     public boolean checkUserName() {
         return username.contains("_") && username.length() <= 5;
     }
-
+// Checks whether the password meets all required
+// password complexity rules.
     public boolean checkPasswordComplexity() {
 
         boolean hasCapitalLetter = password.matches(".*[A-Z].*");
@@ -37,7 +39,8 @@ public class Login {
                 && hasNumber
                 && hasSpecialCharacter;
     }
-
+// Validates that the cellphone number uses the
+// required South African international format.
     public boolean checkCellPhoneNumber() {
 
        /*
@@ -49,7 +52,8 @@ public class Login {
 
         return cellPhoneNumber.matches(cellPhoneRegex);
     }
-
+// Validates the user's registration details and
+// stores the username and password if registration is successful.
     public String registerUser() {
 
         if (!checkUserName()) {
@@ -69,14 +73,16 @@ public class Login {
 
         return "User successfully registered.";
     }
-
+// Checks whether the entered login details match
+// the username and password stored during registration.
     public boolean loginUser(String enteredUsername,
                              String enteredPassword) {
 
         return enteredUsername.equals(registeredUsername)
                 && enteredPassword.equals(registeredPassword);
     }
-
+// Returns the appropriate message depending on
+// whether the login was successful or unsuccessful.
     public String returnLoginStatus(boolean loginSuccessful) {
 
         if (loginSuccessful) {
