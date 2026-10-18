@@ -1,0 +1,122 @@
+package com.mycompany.chatapppart1;
+import java.util.concurrent.ThreadLocalRandom;
+public class Message {
+
+    // Stores the unique ID of the message
+    private String messageID;
+
+    // Stores the recipient's cellphone number
+    private String recipient;
+
+    // Stores the message text
+    private String messageText;
+
+    // Stores the generated message hash
+    private String messageHash;
+
+    // Tracks the number of messages sent
+    private static int totalMessagesSent = 0;
+    
+
+    // Constructor: creates a new message
+    public Message(String recipient, String messageText) {
+        this.recipient = recipient;
+        this.messageText = messageText;
+
+        // Generate a random 10-digit message ID
+        long randomID = ThreadLocalRandom.current()
+                .nextLong(1_000_000_000L, 10_000_000_000L);
+
+        this.messageID = String.valueOf(randomID);
+    }
+
+    // Checks whether the message ID contains exactly 10 digits
+    public boolean checkMessageID() {
+        return messageID.matches("[0-9]{10}");
+    }
+
+    // Checks whether the recipient's cellphone number is valid
+    public String checkRecipientCell() {
+
+        // South African international format: +27 followed by 9 digits
+        String cellRegex = "^\\+27[0-9]{9}$";
+
+        if (recipient != null && recipient.matches(cellRegex)) {
+            return "Cell phone number successfully captured.";
+        } else {
+            return "Cell phone number is incorrectly formatted or does "
+                    + "not contain an international code. "
+                    + "Please correct the number and try again.";
+        }
+    }
+
+    // Checks whether the message is within 250 characters
+    public String checkMessageLength() {
+
+        if (messageText == null) {
+            return "Please enter a message.";
+        }
+
+        if (messageText.length() <= 250) {
+            return "Message ready to send.";
+        } else {
+            int extraCharacters = messageText.length() - 250;
+
+            return "Message exceeds 250 characters by "
+                    + extraCharacters
+                    + "; please reduce the size.";
+        }
+    }
+
+    // Creates a unique hash for the message
+    public String createMessageHash(int messageNumber) {
+
+        String firstTwoDigits = messageID.substring(0, 2);
+
+        String[] words = messageText.trim().split("\\s+");
+
+        String firstWord = words[0];
+        String lastWord = words[words.length - 1];
+
+        messageHash = (firstTwoDigits + ":" + messageNumber
+                + ":" + firstWord + lastWord).toUpperCase();
+
+        return messageHash;
+    }
+
+    // Returns the total number of messages successfully sent
+    public int returnTotalMessages() {
+        return totalMessagesSent;
+    }
+
+    // Allows the user to send, discard or store a message
+    public String SentMessage(int choice) {
+
+        switch (choice) {
+            case 1:
+                totalMessagesSent++;
+                return "Message successfully sent.";
+
+            case 2:
+                return "Press 0 to delete the message.";
+
+            case 3:
+                return "Message successfully stored.";
+
+            default:
+                return "Invalid option. Please try again.";
+        }
+    }
+
+    // Returns the details of this message
+    public String printMessages() {
+
+        return "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + messageText;
+    }
+
+
+}
+
