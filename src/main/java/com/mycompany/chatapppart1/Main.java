@@ -136,8 +136,9 @@ if (cellResult.equals("Cell phone number successfully captured.")
 
 } else {
     System.out.println("Please correct your message before continuing.");
+    }
 }
-}
+            System.out.println("\nTotal messages sent: " + Message.returnTotalMessages());
             break;
                 
             case 2:

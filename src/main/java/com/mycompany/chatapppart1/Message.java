@@ -90,7 +90,7 @@ public class Message {
     }
 
     // Returns the total number of messages successfully sent
-    public int returnTotalMessages() {
+    public static int returnTotalMessages() {
         return totalMessagesSent;
     }
 
