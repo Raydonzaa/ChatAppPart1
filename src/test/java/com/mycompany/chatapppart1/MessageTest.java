@@ -45,4 +45,33 @@ public class MessageTest {
                 message.checkMessageLength()
         );
     }
+        // Recipient number with international code should be accepted
+    @Test
+    public void testRecipientCellSuccess() {
+
+        Message message = new Message(
+                "+27718693002",
+                "Hi Mike, can you join us for dinner tonight?"
+        );
+
+        assertEquals(
+                "Cell phone number successfully captured.",
+                message.checkRecipientCell()
+        );
+    }
+
+    // Recipient number without international code should be rejected
+    @Test
+    public void testRecipientCellFailure() {
+
+        Message message = new Message(
+                "08575975889",
+                "Hi Kegan, did you receive the payment?"
+        );
+
+        assertEquals(
+                "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.",
+                message.checkRecipientCell()
+        );
+    }
 }
