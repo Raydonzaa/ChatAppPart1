@@ -58,8 +58,11 @@ public class Main {
                 
             if (loginSuccessful) {
 
-                System.out.println("\nWelcome to QuickChat");
-
+                System.out.println("\nWelcome to QuickChat.");
+                
+                System.out.print("How many messages do you wish to enter? ");
+            int numberOfMessages = Integer.parseInt(scanner.nextLine());
+            
             int menuChoice = 0;
 
             while (menuChoice != 3) {
@@ -81,6 +84,7 @@ public class Main {
 
         switch (menuChoice) {
             case 1:
+                for (int i = 0; i < numberOfMessages; i++) {
                 System.out.println("\n===== SEND MESSAGE =====");
 
                 System.out.print("Enter recipient cellphone number: ");
@@ -111,7 +115,7 @@ if (cellResult.equals("Cell phone number successfully captured.")
 
         switch (actionInput) { 
             case "1":
-            int messageNumber = message.returnTotalMessages() + 1;
+            int messageNumber = i;
             message.createMessageHash(messageNumber);
 
             System.out.println(message.SentMessage(1));
@@ -133,7 +137,7 @@ if (cellResult.equals("Cell phone number successfully captured.")
 } else {
     System.out.println("Please correct your message before continuing.");
 }
-
+}
             break;
                 
             case 2:
