@@ -134,4 +134,27 @@ public class MessageTest {
 
         assertFalse(message.checkMessageID());
     }
+        // Tests the hash for every test message in a loop
+    @Test
+    public void testMessageHashesInLoop() {
+
+        String[] recipients = {"+27718693002", "08575975889"};
+
+        String[] messages = {
+            "Hi Mike, can you join us for dinner tonight?",
+            "Hi Kegan, did you receive the payment?"
+        };
+
+        String[] expectedHashes = {"00:0:HITONIGHT", "00:1:HIPAYMENT"};
+
+        for (int i = 0; i < messages.length; i++) {
+
+            Message message = new Message(recipients[i], messages[i]);
+
+            // Fixed ID so the first two digits are known
+            message.setMessageID("0012345678");
+
+            assertEquals(expectedHashes[i], message.createMessageHash(i));
+        }
+    }
 }
