@@ -34,7 +34,10 @@ public class Message {
 
         this.messageID = String.valueOf(randomID);
     }
-
+// Allows the message ID to be set to a known value (used for unit testing)
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }
     // Checks whether the message ID contains exactly 10 digits
     public boolean checkMessageID() {
         return messageID.matches("[0-9]{10}");
