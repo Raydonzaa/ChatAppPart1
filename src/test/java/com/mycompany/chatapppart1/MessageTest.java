@@ -109,4 +109,29 @@ public class MessageTest {
 
         assertEquals("Message successfully stored.", message.SentMessage(3));
     }
+        // A freshly generated message ID should be exactly 10 digits
+    @Test
+    public void testMessageIDGenerated() {
+
+        Message message = new Message(
+                "+27718693002",
+                "Hi Mike, can you join us for dinner tonight?"
+        );
+
+        assertTrue(message.checkMessageID());
+    }
+
+    // A message ID that is not 10 digits should be rejected
+    @Test
+    public void testMessageIDInvalid() {
+
+        Message message = new Message(
+                "+27718693002",
+                "Hi Mike, can you join us for dinner tonight?"
+        );
+
+        message.setMessageID("12345");
+
+        assertFalse(message.checkMessageID());
+    }
 }
