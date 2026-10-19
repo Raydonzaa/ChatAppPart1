@@ -74,4 +74,39 @@ public class MessageTest {
                 message.checkRecipientCell()
         );
     }
+        // Choice 1: user selects Send Message
+    @Test
+    public void testSentMessageSend() {
+
+        Message message = new Message(
+                "+27718693002",
+                "Hi Mike, can you join us for dinner tonight?"
+        );
+
+        assertEquals("Message successfully sent.", message.SentMessage(1));
+    }
+
+    // Choice 2: user selects Disregard Message
+    @Test
+    public void testSentMessageDiscard() {
+
+        Message message = new Message(
+                "+27718693002",
+                "Hi Mike, can you join us for dinner tonight?"
+        );
+
+        assertEquals("Press 0 to delete the message.", message.SentMessage(2));
+    }
+
+    // Choice 3: user selects Store Message
+    @Test
+    public void testSentMessageStore() {
+
+        Message message = new Message(
+                "+27718693002",
+                "Hi Mike, can you join us for dinner tonight?"
+        );
+
+        assertEquals("Message successfully stored.", message.SentMessage(3));
+    }
 }
