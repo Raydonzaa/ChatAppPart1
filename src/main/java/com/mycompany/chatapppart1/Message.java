@@ -1,5 +1,10 @@
 package com.mycompany.chatapppart1;
 import java.util.concurrent.ThreadLocalRandom;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Message {
 
     // Stores the unique ID of the message
@@ -75,8 +80,8 @@ public class Message {
 
         String[] words = messageText.trim().split("\\s+");
 
-        String firstWord = words[0];
-        String lastWord = words[words.length - 1];
+        String firstWord = words[0].replaceAll("[^a-zA-Z0-9]", "");
+        String lastWord = words[words.length - 1].replaceAll("[^a-zA-Z0-9]", "");
 
         messageHash = (firstTwoDigits + ":" + messageNumber
                 + ":" + firstWord + lastWord).toUpperCase();
@@ -116,6 +121,42 @@ public class Message {
                 + "\nRecipient: " + recipient
                 + "\nMessage: " + messageText;
     }
+
+
+    // Stores messages in a valid JSON array
+    public String storeMessage() {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+
+        java.io.File file = new java.io.File("storedMessages.json");
+
+        try {
+            com.google.gson.JsonArray messages = new com.google.gson.JsonArray();
+
+            if (file.exists() && file.length() > 0) {
+                try (java.io.FileReader reader =
+                        new java.io.FileReader(file)) {
+                    messages = com.google.gson.JsonParser
+                            .parseReader(reader).getAsJsonArray();
+                }
+            }
+
+            messages.add(gson.toJsonTree(this));
+
+            try (FileWriter writer = new FileWriter(file)) {
+                gson.toJson(messages, writer);
+            }
+
+            return "Message successfully stored.";
+
+        } catch (IOException | IllegalStateException
+                | com.google.gson.JsonParseException e) {
+            return "Error storing message: " + e.getMessage();
+        }
+    }
+
+    
 
 
 }
