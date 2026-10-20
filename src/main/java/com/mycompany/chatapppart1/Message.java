@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Message {
 
@@ -21,6 +22,9 @@ public class Message {
 
     // Tracks the number of messages sent
     private static int totalMessagesSent = 0;
+    
+    // Stores the details of every message sent while the program runs
+    private static ArrayList<String> sentMessages = new ArrayList<>();
     
 
     // Constructor: creates a new message
@@ -103,6 +107,7 @@ public class Message {
         switch (choice) {
             case 1:
                 totalMessagesSent++;
+                sentMessages.add(getMessageDetails());
                 return "Message successfully sent.";
 
             case 2:
@@ -116,14 +121,26 @@ public class Message {
         }
     }
 
-    // Returns the details of this message
-    public String printMessages() {
+    // Builds the details of this one message
+private String getMessageDetails() {
 
-        return "Message ID: " + messageID
-                + "\nMessage Hash: " + messageHash
-                + "\nRecipient: " + recipient
-                + "\nMessage: " + messageText;
+    return "Message ID: " + messageID
+            + "\nMessage Hash: " + messageHash
+            + "\nRecipient: " + recipient
+            + "\nMessage: " + messageText;
+}
+
+// Returns the details of all messages sent while the program is running
+public static String printMessages() {
+
+    String allMessages = "";
+
+    for (String details : sentMessages) {
+        allMessages += details + "\n\n";
     }
+
+    return allMessages;
+}
 
 
     // Stores messages in a valid JSON array
