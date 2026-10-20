@@ -122,7 +122,7 @@ public class Message {
     }
 
     // Builds the details of this one message
-private String getMessageDetails() {
+public String getMessageDetails() {
 
     return "Message ID: " + messageID
             + "\nMessage Hash: " + messageHash

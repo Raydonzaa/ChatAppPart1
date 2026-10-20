@@ -119,7 +119,7 @@ if (cellResult.equals("Cell phone number successfully captured.")
             message.createMessageHash(messageNumber);
 
             System.out.println(message.SentMessage(1));
-            System.out.println(message.printMessages());
+            System.out.println(message.getMessageDetails());
             break;
 
             case "2":
