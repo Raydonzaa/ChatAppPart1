@@ -143,7 +143,12 @@ public static String printMessages() {
 }
 
 
-    // Stores messages in a valid JSON array
+    /*
+ * Stores the message in a JSON file using the Gson library.
+ * Reference: Google (n.d.) Gson User Guide.
+ * Available at: https://github.com/google/gson/blob/main/UserGuide.md
+ * [Accessed 20 October 2026].
+ */
     public String storeMessage() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
