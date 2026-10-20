@@ -147,8 +147,9 @@ if (cellResult.equals("Cell phone number successfully captured.")
     break;
 
             case "3":
-            System.out.println(message.storeMessage());
-            break;
+    message.createMessageHash(i);
+    System.out.println(message.storeMessage());
+    break;
 
         default:
             System.out.println("Invalid option. Please try again.");
