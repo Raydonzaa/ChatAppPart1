@@ -2,6 +2,11 @@ package com.mycompany.chatapppart1;
 
 import java.util.Scanner;
 
+/**
+ * Console entry point for QuickChat.
+ * Registers and logs in a user, then lets the logged-in user send,
+ * discard or store the number of messages they chose.
+ */
 public class Main {
 
     public static void main(String[] args) {

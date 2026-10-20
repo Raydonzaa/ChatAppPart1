@@ -6,7 +6,18 @@ import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileReader;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonParseException;
 
+/**
+ * Represents one chat message in QuickChat.
+ * Holds the recipient, message text, ID and hash, validates the recipient
+ * and message length, tracks the messages sent while the program runs,
+ * and stores messages in a JSON file.
+ */
 public class Message {
 
     // Stores the unique ID of the message
@@ -152,35 +163,34 @@ public class Message {
  * [Accessed 20 October 2026].
      */
     public String storeMessage() {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .create();
 
-        java.io.File file = new java.io.File("storedMessages.json");
+    Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
-        try {
-            com.google.gson.JsonArray messages = new com.google.gson.JsonArray();
+    File file = new File("storedMessages.json");
 
-            if (file.exists() && file.length() > 0) {
-                try (java.io.FileReader reader
-                        = new java.io.FileReader(file)) {
-                    messages = com.google.gson.JsonParser
-                            .parseReader(reader).getAsJsonArray();
-                }
+    try {
+        JsonArray messages = new JsonArray();
+
+        // Load the messages already in the file, if there are any
+        if (file.exists() && file.length() > 0) {
+            try (FileReader reader = new FileReader(file)) {
+                messages = JsonParser.parseReader(reader).getAsJsonArray();
             }
-
-            messages.add(gson.toJsonTree(this));
-
-            try (FileWriter writer = new FileWriter(file)) {
-                gson.toJson(messages, writer);
-            }
-
-            return "Message successfully stored.";
-
-        } catch (IOException | IllegalStateException
-                | com.google.gson.JsonParseException e) {
-            return "Error storing message: " + e.getMessage();
         }
+
+        messages.add(gson.toJsonTree(this));
+
+        try (FileWriter writer = new FileWriter(file)) {
+            gson.toJson(messages, writer);
+        }
+
+        return "Message successfully stored.";
+
+    } catch (IOException | IllegalStateException | JsonParseException e) {
+        return "Error storing message: " + e.getMessage();
     }
+}
 
 }
