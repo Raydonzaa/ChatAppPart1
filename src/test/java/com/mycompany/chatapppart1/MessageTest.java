@@ -19,7 +19,8 @@ public class MessageTest {
 
         assertEquals("00:0:HITONIGHT", message.createMessageHash(0));
     }
-        // Message of 250 characters or less should be accepted
+    // Message of 250 characters or less should be accepted
+
     @Test
     public void testMessageLengthSuccess() {
 
@@ -45,7 +46,8 @@ public class MessageTest {
                 message.checkMessageLength()
         );
     }
-        // Recipient number with international code should be accepted
+    // Recipient number with international code should be accepted
+
     @Test
     public void testRecipientCellSuccess() {
 
@@ -74,7 +76,8 @@ public class MessageTest {
                 message.checkRecipientCell()
         );
     }
-        // Choice 1: user selects Send Message
+    // Choice 1: user selects Send Message
+
     @Test
     public void testSentMessageSend() {
 
@@ -109,7 +112,8 @@ public class MessageTest {
 
         assertEquals("Message successfully stored.", message.SentMessage(3));
     }
-        // A freshly generated message ID should be exactly 10 digits
+    // A freshly generated message ID should be exactly 10 digits
+
     @Test
     public void testMessageIDGenerated() {
 
@@ -134,7 +138,8 @@ public class MessageTest {
 
         assertFalse(message.checkMessageID());
     }
-        // Tests the hash for every test message in a loop
+    // Tests the hash for every test message in a loop
+
     @Test
     public void testMessageHashesInLoop() {
 

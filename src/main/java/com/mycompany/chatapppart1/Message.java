@@ -1,4 +1,5 @@
 package com.mycompany.chatapppart1;
+
 import java.util.concurrent.ThreadLocalRandom;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,10 +23,9 @@ public class Message {
 
     // Tracks the number of messages sent
     private static int totalMessagesSent = 0;
-    
+
     // Stores the details of every message sent while the program runs
     private static ArrayList<String> sentMessages = new ArrayList<>();
-    
 
     // Constructor: creates a new message
     public Message(String recipient, String messageText) {
@@ -39,9 +39,11 @@ public class Message {
         this.messageID = String.valueOf(randomID);
     }
 // Allows the message ID to be set to a known value (used for unit testing)
+
     public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
+
     // Checks whether the message ID contains exactly 10 digits
     public boolean checkMessageID() {
         return messageID.matches("[0-9]{10}");
@@ -122,25 +124,25 @@ public class Message {
     }
 
     // Builds the details of this one message
-public String getMessageDetails() {
+    public String getMessageDetails() {
 
-    return "Message ID: " + messageID
-            + "\nMessage Hash: " + messageHash
-            + "\nRecipient: " + recipient
-            + "\nMessage: " + messageText;
-}
-
-// Returns the details of all messages sent while the program is running
-public static String printMessages() {
-
-    String allMessages = "";
-
-    for (String details : sentMessages) {
-        allMessages += details + "\n\n";
+        return "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + messageText;
     }
 
-    return allMessages;
-}
+// Returns the details of all messages sent while the program is running
+    public static String printMessages() {
+
+        String allMessages = "";
+
+        for (String details : sentMessages) {
+            allMessages += details + "\n\n";
+        }
+
+        return allMessages;
+    }
 
 
     /*
@@ -148,7 +150,7 @@ public static String printMessages() {
  * Reference: Google (n.d.) Gson User Guide.
  * Available at: https://github.com/google/gson/blob/main/UserGuide.md
  * [Accessed 20 October 2026].
- */
+     */
     public String storeMessage() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -160,8 +162,8 @@ public static String printMessages() {
             com.google.gson.JsonArray messages = new com.google.gson.JsonArray();
 
             if (file.exists() && file.length() > 0) {
-                try (java.io.FileReader reader =
-                        new java.io.FileReader(file)) {
+                try (java.io.FileReader reader
+                        = new java.io.FileReader(file)) {
                     messages = com.google.gson.JsonParser
                             .parseReader(reader).getAsJsonArray();
                 }
@@ -181,8 +183,4 @@ public static String printMessages() {
         }
     }
 
-    
-
-
 }
-
