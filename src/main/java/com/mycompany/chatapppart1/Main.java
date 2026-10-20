@@ -60,8 +60,22 @@ public class Main {
 
                 System.out.println("\nWelcome to QuickChat.");
                 
+                int numberOfMessages = 0;
+
+// Keeps asking until the user enters a whole number of 1 or more
+while (numberOfMessages < 1) {
                 System.out.print("How many messages do you wish to enter? ");
-            int numberOfMessages = Integer.parseInt(scanner.nextLine());
+
+    try {
+        numberOfMessages = Integer.parseInt(scanner.nextLine().trim());
+    } catch (NumberFormatException e) {
+        numberOfMessages = 0;
+    }
+
+    if (numberOfMessages < 1) {
+        System.out.println("Please enter a whole number of 1 or more.");
+    }
+}
             
             int menuChoice = 0;
 
@@ -123,12 +137,19 @@ if (cellResult.equals("Cell phone number successfully captured.")
             break;
 
             case "2":
-            System.out.println("Message discarded.");
-            break;
+            System.out.println(message.SentMessage(2));
+            System.out.print("Enter 0 to delete the message: ");
+            String deleteInput = scanner.nextLine();
+
+    if (deleteInput.equals("0")) {
+            System.out.println("Message deleted.");
+    }
+    break;
 
             case "3":
-            System.out.println(message.storeMessage());
-            break;
+    message.createMessageHash(i);
+    System.out.println(message.storeMessage());
+    break;
 
         default:
             System.out.println("Invalid option. Please try again.");
