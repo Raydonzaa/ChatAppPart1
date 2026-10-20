@@ -1,11 +1,23 @@
 package com.mycompany.chatapppart1;
+
 import java.util.concurrent.ThreadLocalRandom;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileReader;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonParseException;
 
+/**
+ * Represents one chat message in QuickChat.
+ * Holds the recipient, message text, ID and hash, validates the recipient
+ * and message length, tracks the messages sent while the program runs,
+ * and stores messages in a JSON file.
+ */
 public class Message {
 
     // Stores the unique ID of the message
@@ -22,10 +34,9 @@ public class Message {
 
     // Tracks the number of messages sent
     private static int totalMessagesSent = 0;
-    
+
     // Stores the details of every message sent while the program runs
     private static ArrayList<String> sentMessages = new ArrayList<>();
-    
 
     // Constructor: creates a new message
     public Message(String recipient, String messageText) {
@@ -39,9 +50,11 @@ public class Message {
         this.messageID = String.valueOf(randomID);
     }
 // Allows the message ID to be set to a known value (used for unit testing)
+
     public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
+
     // Checks whether the message ID contains exactly 10 digits
     public boolean checkMessageID() {
         return messageID.matches("[0-9]{10}");
@@ -122,25 +135,25 @@ public class Message {
     }
 
     // Builds the details of this one message
-public String getMessageDetails() {
+    public String getMessageDetails() {
 
-    return "Message ID: " + messageID
-            + "\nMessage Hash: " + messageHash
-            + "\nRecipient: " + recipient
-            + "\nMessage: " + messageText;
-}
-
-// Returns the details of all messages sent while the program is running
-public static String printMessages() {
-
-    String allMessages = "";
-
-    for (String details : sentMessages) {
-        allMessages += details + "\n\n";
+        return "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + messageText;
     }
 
-    return allMessages;
-}
+// Returns the details of all messages sent while the program is running
+    public static String printMessages() {
+
+        String allMessages = "";
+
+        for (String details : sentMessages) {
+            allMessages += details + "\n\n";
+        }
+
+        return allMessages;
+    }
 
 
     /*
@@ -148,41 +161,36 @@ public static String printMessages() {
  * Reference: Google (n.d.) Gson User Guide.
  * Available at: https://github.com/google/gson/blob/main/UserGuide.md
  * [Accessed 20 October 2026].
- */
+     */
     public String storeMessage() {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .create();
 
-        java.io.File file = new java.io.File("storedMessages.json");
+    Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
-        try {
-            com.google.gson.JsonArray messages = new com.google.gson.JsonArray();
+    File file = new File("storedMessages.json");
 
-            if (file.exists() && file.length() > 0) {
-                try (java.io.FileReader reader =
-                        new java.io.FileReader(file)) {
-                    messages = com.google.gson.JsonParser
-                            .parseReader(reader).getAsJsonArray();
-                }
+    try {
+        JsonArray messages = new JsonArray();
+
+        // Load the messages already in the file, if there are any
+        if (file.exists() && file.length() > 0) {
+            try (FileReader reader = new FileReader(file)) {
+                messages = JsonParser.parseReader(reader).getAsJsonArray();
             }
-
-            messages.add(gson.toJsonTree(this));
-
-            try (FileWriter writer = new FileWriter(file)) {
-                gson.toJson(messages, writer);
-            }
-
-            return "Message successfully stored.";
-
-        } catch (IOException | IllegalStateException
-                | com.google.gson.JsonParseException e) {
-            return "Error storing message: " + e.getMessage();
         }
+
+        messages.add(gson.toJsonTree(this));
+
+        try (FileWriter writer = new FileWriter(file)) {
+            gson.toJson(messages, writer);
+        }
+
+        return "Message successfully stored.";
+
+    } catch (IOException | IllegalStateException | JsonParseException e) {
+        return "Error storing message: " + e.getMessage();
     }
-
-    
-
-
 }
 
+}
