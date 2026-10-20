@@ -123,8 +123,14 @@ if (cellResult.equals("Cell phone number successfully captured.")
             break;
 
             case "2":
-            System.out.println("Message discarded.");
-            break;
+            System.out.println(message.SentMessage(2));
+            System.out.print("Enter 0 to delete the message: ");
+            String deleteInput = scanner.nextLine();
+
+    if (deleteInput.equals("0")) {
+            System.out.println("Message deleted.");
+    }
+    break;
 
             case "3":
             System.out.println(message.storeMessage());
