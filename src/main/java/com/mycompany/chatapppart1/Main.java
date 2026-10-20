@@ -60,8 +60,22 @@ public class Main {
 
                 System.out.println("\nWelcome to QuickChat.");
                 
+                int numberOfMessages = 0;
+
+// Keeps asking until the user enters a whole number of 1 or more
+while (numberOfMessages < 1) {
                 System.out.print("How many messages do you wish to enter? ");
-            int numberOfMessages = Integer.parseInt(scanner.nextLine());
+
+    try {
+        numberOfMessages = Integer.parseInt(scanner.nextLine().trim());
+    } catch (NumberFormatException e) {
+        numberOfMessages = 0;
+    }
+
+    if (numberOfMessages < 1) {
+        System.out.println("Please enter a whole number of 1 or more.");
+    }
+}
             
             int menuChoice = 0;
 
