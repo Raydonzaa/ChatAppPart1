@@ -1,20 +1,20 @@
 [
   {
-    "messageID": "9415140919",
+    "messageID": "1983185211",
     "recipient": "+27718693002",
     "messageText": "Hi Mike, can you join us for dinner tonight?",
-    "messageHash": "94:0:HITONIGHT"
+    "messageHash": "19:0:HITONIGHT"
   },
   {
-    "messageID": "4663556603",
+    "messageID": "3608114370",
     "recipient": "+27718693002",
     "messageText": "Hi Kegan, did you receive the payment?",
-    "messageHash": "46:1:HIPAYMENT"
+    "messageHash": "36:1:HIPAYMENT"
   },
   {
-    "messageID": "2980186030",
-    "recipient": "+27718693002",
-    "messageText": "Hi Mike, can you join us for dinner tonight?",
-    "messageHash": "29:0:HITONIGHT"
+    "messageID": "2194304547",
+    "recipient": "+27827190123",
+    "messageText": "This is a test message",
+    "messageHash": "21:0:THISMESSAGE"
   }
 ]

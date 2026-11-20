@@ -35,8 +35,14 @@ public class Message {
     // Tracks the number of messages sent
     private static int totalMessagesSent = 0;
 
-    // Stores the details of every message sent while the program runs
-    private static ArrayList<String> sentMessages = new ArrayList<>();
+    // We use ArrayList<Message> so we store the actual message objects
+    public static ArrayList<Message> sentMessages = new ArrayList<>();
+    public static ArrayList<Message> disregardedMessages = new ArrayList<>();
+    public static ArrayList<Message> storedMessages = new ArrayList<>();
+
+    // These stay as Strings because they just hold text (the ID and the Hash)
+    public static ArrayList<String> messageHashes = new ArrayList<>();
+    public static ArrayList<String> messageIDs = new ArrayList<>();
 
     // Constructor: creates a new message
     public Message(String recipient, String messageText) {
@@ -120,7 +126,7 @@ public class Message {
         switch (choice) {
             case 1:
                 totalMessagesSent++;
-                sentMessages.add(getMessageDetails());
+                sentMessages.add(this);
                 return "Message successfully sent.";
 
             case 2:
@@ -148,8 +154,8 @@ public class Message {
 
         String allMessages = "";
 
-        for (String details : sentMessages) {
-            allMessages += details + "\n\n";
+        for (Message details : sentMessages) {
+            allMessages += details.getMessageText() + "\n\n";
         }
 
         return allMessages;
@@ -192,5 +198,77 @@ public class Message {
         return "Error storing message: " + e.getMessage();
     }
 }
+    // Getters to access the private data in Part 3
+    public String getMessageID() {
+        return messageID;
+    }
 
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public String getMessageHash() {
+        return messageHash;
+    }
+    
+    public static ArrayList<Message> getStoredMessages() {
+        return storedMessages;
+    }
+    // This method populates the arrays with the exact test data from the assignment rubric
+    public static void populateTestData() {
+        // Clear everything first so we don't get duplicates if we run it twice
+        sentMessages.clear();
+        storedMessages.clear();
+        disregardedMessages.clear();
+        messageHashes.clear();
+        messageIDs.clear();
+
+        // Test Data Message 1 (Sent)
+        Message m1 = new Message("+27834557896", "Did you get the cake?");
+        m1.setMessageID("1111111111"); 
+        m1.createMessageHash(1);
+        m1.SentMessage(1); 
+        messageIDs.add(m1.getMessageID());
+        messageHashes.add(m1.getMessageHash());
+
+        // Test Data Message 2 (Stored)
+        Message m2 = new Message("+27838884567", "Where are you? You are late! I have asked you to be on time.");
+        m2.setMessageID("2222222222");
+        m2.createMessageHash(2);
+        m2.SentMessage(3); // 3 stores it in your logic
+        messageIDs.add(m2.getMessageID());
+        messageHashes.add(m2.getMessageHash());
+        storedMessages.add(m2); 
+
+        // Test Data Message 3 (Disregarded)
+        Message m3 = new Message("+27834484567", "Yohoooo, I am at your gate.");
+        m3.setMessageID("3333333333");
+        m3.createMessageHash(3);
+        m3.SentMessage(2); // 2 discards it in your logic
+        messageIDs.add(m3.getMessageID());
+        messageHashes.add(m3.getMessageHash());
+        disregardedMessages.add(m3);
+
+        // Test Data Message 4 (Sent / Stored for testing)
+        Message m4 = new Message("0838884567", "It is dinner time !");
+        m4.setMessageID("4444444444");
+        m4.createMessageHash(4);
+        m4.SentMessage(1); // 1 sends it
+        messageIDs.add(m4.getMessageID());
+        messageHashes.add(m4.getMessageHash());
+        storedMessages.add(m4); // Added to stored array for the "longest message" test
+
+        // Test Data Message 5 (Stored)
+        Message m5 = new Message("+27838884567", "Ok, I am leaving without you.");
+        m5.setMessageID("5555555555");
+        m5.createMessageHash(5);
+        m5.SentMessage(3); // 3 stores it
+        messageIDs.add(m5.getMessageID());
+        messageHashes.add(m5.getMessageHash());
+        storedMessages.add(m5);
+    }
 }
