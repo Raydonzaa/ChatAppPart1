@@ -162,4 +162,88 @@ public class MessageTest {
             assertEquals(expectedHashes[i], message.createMessageHash(i));
         }
     }
+    // ==========================================
+    // PART 3 TESTS: Array logic and Searching
+    // ==========================================
+
+    @Test
+    public void testSentMessagesArray() {
+        // Load the specific test data for Part 3
+        Message.populateTestData(); 
+        
+        // The rubric expects 2 sent messages from the test data
+        assertEquals(2, Message.sentMessages.size(), "There should be 2 sent messages.");
+        assertEquals("Did you get the cake?", Message.sentMessages.get(0).getMessageText());
+    }
+
+    @Test
+    public void testLongestMessage() {
+        Message.populateTestData(); 
+        
+        String expectedLongest = "Where are you? You are late! I have asked you to be on time.";
+        String actualLongest = "";
+        
+        for (Message m : Message.getStoredMessages()) {
+            if (m.getMessageText().length() > actualLongest.length()) {
+                actualLongest = m.getMessageText();
+            }
+        }
+        
+        assertEquals(expectedLongest, actualLongest, "The longest message was not found correctly.");
+    }
+
+    @Test
+    public void testSearchMessageID() {
+        Message.populateTestData(); 
+        
+        String searchID = "4444444444"; // We set this in populateTestData
+        String expectedMessage = "It is dinner time !";
+        String actualMessage = "";
+
+        for (Message m : Message.getStoredMessages()) {
+            if (m.getMessageID().equals(searchID)) {
+                actualMessage = m.getMessageText();
+                break;
+            }
+        }
+        
+        assertEquals(expectedMessage, actualMessage, "Failed to find message by ID.");
+    }
+
+    @Test
+    public void testSearchRecipient() {
+        Message.populateTestData(); 
+        
+        String searchRecipient = "+27838884567";
+        String expectedMsg1 = "Where are you? You are late! I have asked you to be on time.";
+        String expectedMsg2 = "Ok, I am leaving without you.";
+        
+        StringBuilder foundMessages = new StringBuilder();
+        
+        for (Message m : Message.getStoredMessages()) {
+            if (m.getRecipient().equals(searchRecipient)) {
+                foundMessages.append(m.getMessageText()).append(" ");
+            }
+        }
+        
+        assertTrue(foundMessages.toString().contains(expectedMsg1), "Did not find first message.");
+        assertTrue(foundMessages.toString().contains(expectedMsg2), "Did not find second message.");
+    }
+
+    @Test
+    public void testDeleteMessageByHash() {
+        Message.populateTestData(); 
+        
+        String hashToDelete = Message.getStoredMessages().get(0).getMessageHash(); 
+        int initialSize = Message.getStoredMessages().size();
+        
+        for (int i = 0; i < Message.getStoredMessages().size(); i++) {
+            if (Message.getStoredMessages().get(i).getMessageHash().equals(hashToDelete)) {
+                Message.getStoredMessages().remove(i);
+                break;
+            }
+        }
+        
+        assertEquals(initialSize - 1, Message.getStoredMessages().size(), "Message was not deleted.");
+    }
 }
